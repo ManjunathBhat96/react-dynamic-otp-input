@@ -1,7 +1,7 @@
-import { useState, useEffect,useRef, useReducer } from 'react'
+import {useRef, useReducer } from 'react'
 
 interface OtpProps {
-    blocks: number;
+    numberOfInputFields: number;
     inputBoxStyle?: React.CSSProperties;
 };
 
@@ -9,8 +9,8 @@ interface initialStateType {
     value: string;  
     ref:  React.RefObject<HTMLInputElement> | null;
 }
-function Otp({ blocks=4, inputBoxStyle }: OtpProps) {
-    const initialState = Array.from({ length: blocks }, () => ({
+function Otp({ numberOfInputFields=4, inputBoxStyle }: OtpProps) {
+    const initialState = Array.from({ length: numberOfInputFields }, () => ({
         value: '',
         ref: useRef<HTMLInputElement>(null),
     }));
@@ -22,7 +22,7 @@ function Otp({ blocks=4, inputBoxStyle }: OtpProps) {
                 newState[action.payload.index].value = action.payload.value;
 
                 // Move focus to the next input box
-                if (action.payload.value && action.payload.index < blocks - 1) {
+                if (action.payload.value && action.payload.index < numberOfInputFields - 1) {
                     initialState[action.payload.index + 1].ref.current?.focus();
                 }
 
