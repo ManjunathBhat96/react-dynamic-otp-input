@@ -1,21 +1,21 @@
-import {useRef, useReducer } from 'react'
+import {useRef, useReducer, useEffect } from 'react'
 
 interface OtpProps {
     numberOfInputFields: number;
     inputBoxStyle?: React.CSSProperties;
+    onchange?: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
 };
 
 interface initialStateType {
     value: string;  
     ref:  React.RefObject<HTMLInputElement> | null;
 }
-function Otp({ numberOfInputFields=4, inputBoxStyle }: OtpProps) {
+export const OtpInput = ({ numberOfInputFields=4, inputBoxStyle, onchange }: OtpProps)=> {
     const initialState = Array.from({ length: numberOfInputFields }, () => ({
         value: '',
         ref: useRef<HTMLInputElement>(null),
     }));
     const reducer=(initialState: initialStateType, action: any)=>{
-        console.log('12111', action.payload.index,  {...initialState[action.payload.index], ref: initialState[action.payload.index].ref.current?.focus()})
         switch (action.type) {
             case 'onchange': {
                 const newState = [...initialState];
@@ -25,12 +25,19 @@ function Otp({ numberOfInputFields=4, inputBoxStyle }: OtpProps) {
                 if (action.payload.value && action.payload.index < numberOfInputFields - 1) {
                     initialState[action.payload.index + 1].ref.current?.focus();
                 }
-
                 return newState;
             }
         default: return initialState;
         }
     }
+    // useEffect(() => {
+    //     console.log('initialState', initialState[0],initialState[0].value==='');
+    //     if (initialState[0].value==='') {
+    //         initialState[0].ref.current.focus();
+    //     }
+    // },[initialState])
+
+    console.log('initialState', initialState[0],initialState[0].value==='');
     const [state, dispatch] = useReducer(reducer, initialState);
     const InputBoxStyle = {
         width: '50px',
@@ -46,12 +53,9 @@ function Otp({ numberOfInputFields=4, inputBoxStyle }: OtpProps) {
         outline: 'none',
     };
 
-
-
-    
-   
       const inputHandler=(e: React.ChangeEvent<HTMLInputElement>, index: number)=>{
         dispatch({type:'onchange', payload: {value:e.target.value, index: index}})
+        onchange(e, index)
       }
     return (
         <div>
@@ -70,4 +74,4 @@ function Otp({ numberOfInputFields=4, inputBoxStyle }: OtpProps) {
     )
 }
 
-export default Otp
+export default OtpInput

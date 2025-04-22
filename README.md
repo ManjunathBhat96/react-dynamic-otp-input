@@ -1,4 +1,9 @@
-# React + TypeScript + Vite
+> ⚠️ **Work in Progress**  
+## Work in Progress
+This package is currently under active development. Features and documentation will be completed soon.  
+Feel free to try it out and share feedback or open issues!
+
+<!-- # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -51,4 +56,4 @@ export default tseslint.config({
     ...reactDom.configs.recommended.rules,
   },
 })
-```
+``` -->
