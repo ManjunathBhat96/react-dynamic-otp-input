@@ -1,4 +1,4 @@
-import {useRef, useReducer, useEffect } from 'react'
+import {useRef, useReducer } from 'react'
 
 interface OtpProps {
     numberOfInputFields: number;
@@ -10,7 +10,7 @@ interface initialStateType {
     value: string;  
     ref:  React.RefObject<HTMLInputElement> | null;
 }
-export const OtpInput = ({ numberOfInputFields=4, inputBoxStyle, onchange }: OtpProps)=> {
+const OtpInput = ({ numberOfInputFields=4, inputBoxStyle, onchange }: OtpProps)=> {
     const initialState = Array.from({ length: numberOfInputFields }, () => ({
         value: '',
         ref: useRef<HTMLInputElement>(null),
@@ -74,4 +74,5 @@ export const OtpInput = ({ numberOfInputFields=4, inputBoxStyle, onchange }: Otp
     )
 }
 
-export default OtpInput
+export { OtpInput };
+export default OtpInput;
