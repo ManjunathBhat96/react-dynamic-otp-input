@@ -19,11 +19,12 @@ type Action =
 const OtpInput = ({
     numberOfInputFields = 4,
     inputBoxStyle,
-    onchange = () => {}, // Default to a no-op function if not provided
+    onchange = () => {},
 }: OtpInputProps) => {
-    const initialState: State = Array.from({ length: numberOfInputFields }, () => ({
+    const firstInputRef = useRef<HTMLInputElement>(null); 
+    const initialState: State = Array.from({ length: numberOfInputFields }, (_, index) => ({
         value: '',
-        ref: React.createRef<HTMLInputElement>(), // Use React.createRef instead of useRef
+        ref: index === 0 ? firstInputRef : React.createRef<HTMLInputElement>(), 
     }));
 
     const reducer = (state: State, action: Action): State => {
@@ -32,7 +33,6 @@ const OtpInput = ({
                 const newState = [...state];
                 newState[action.payload.index].value = action.payload.value;
 
-                // Move focus to the next input box
                 if (action.payload.value && action.payload.index < numberOfInputFields - 1) {
                     newState[action.payload.index + 1].ref.current?.focus();
                 }
@@ -64,9 +64,24 @@ const OtpInput = ({
         onchange(e, index);
     };
 
+    const keyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+        if (e.key === 'Backspace' && !state[index].value && index > 0) {
+            state[index - 1].ref.current?.focus();
+        }
+        if (
+            !/^[0-9]$/.test(e.key) &&
+            e.key !== 'Backspace' &&
+            e.key !== 'Delete' &&
+            e.key !== 'ArrowLeft' &&
+            e.key !== 'ArrowRight' &&
+            e.key !== 'Tab'
+        ) {
+            e.preventDefault();
+        }
+    };
     return (
         <div>
-            {state.map((input, index) => (
+            {state?.map((input, index) => (
                 <input
                     ref={input.ref}
                     maxLength={1}
@@ -75,6 +90,8 @@ const OtpInput = ({
                     type="text"
                     value={input.value}
                     onChange={(e) => inputHandler(e, index)}
+                    onKeyDown={(e) => keyDownHandler(e, index)}
+
                 />
             ))}
         </div>
