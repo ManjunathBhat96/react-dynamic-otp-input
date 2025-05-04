@@ -1,6 +1,6 @@
 {
-  "name": "react-dynamic-otp-input",
-  "version": "1.0.0",
+  "name": "react-dynamic-otp-inputs",
+  "version": "1.0.3",
   "description": "react OTP input\t",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -31,6 +31,18 @@
   "dependencies": {
     "@types/react": "^19.1.2",
     "rollup": "^4.40.1"
-  }
+  },
+  "keywords": [
+    "react",
+    "otp",
+    "otp-input",
+    "react-otp-input",
+    "otp field",
+    "otp component",
+    "react input",
+    "reactjs",
+    "react component",
+    "input box"
+  ]
 
 }

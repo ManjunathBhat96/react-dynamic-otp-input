@@ -1,59 +1,52 @@
-> ⚠️ **Work in Progress**  
-## Work in Progress
-This package is currently under active development. Features and documentation will be completed soon.  
-Feel free to try it out and share feedback or open issues!
 
-<!-- # React + TypeScript + Vite
+## Features
+Dynamic generation of OTP input fields
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Customizable input styles
 
-Currently, two official plugins are available:
+Automatic focus transition between inputs
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Support for controlled and uncontrolled input modes
 
-## Expanding the ESLint configuration
+Accessible and keyboard-friendly
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Installation
+Install the package using npm:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install react-dynamic-otp-inputs
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Usage
+Here's a basic example of how to use the OtpInput component:
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import React from 'react';
+import OtpInput from 'react-dynamic-otp-inputs';
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-``` -->
+const App = () => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    console.log(`Input at index ${index} changed to ${e.target.value}`);
+  };
+
+  return (
+    <div>
+      <h2>Enter OTP</h2>
+      <OtpInput
+        numberOfInputFields={6}
+        inputBoxStyle={{ border: '1px solid #ccc', padding: '10px', fontSize: '18px' }}
+        onchange={handleChange}
+      />
+    </div>
+  );
+};
+
+export default App;
+```
+## Props
+
+| Prop Name             | Type                                                              | Default     | Description                                                                |
+| --------------------- | ----------------------------------------------------------------- | ----------- | -------------------------------------------------------------------------- |
+| `numberOfInputFields` | `number`                                                          | `4`         | Specifies how many OTP input boxes to render.                              |
+| `inputBoxStyle`       | `React.CSSProperties`                                             |  | Optional inline styles to customize each input box.                        |
+| `onchange`            | `(e: React.ChangeEvent<HTMLInputElement>, index: number) => void` | `() => {}`  | Callback function that triggers when the value in any input field changes. |
+
